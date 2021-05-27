@@ -1,0 +1,34 @@
+version: "3.8"
+services:
+  server: 
+    container_name: animal_noises_server
+    image: htrvolker/animal_noises_server
+    build: ./server
+    # deploy:
+    #   replicas: 5
+    ports:
+    - target: 5000
+      published: 5000
+      protocol: tcp
+    environment: 
+      DATABASE_URI: ${DATABASE_URI}
+  api:
+    container_name: animal_noises_api
+    image: htrvolker/animal_noises_api
+    build: ./animal_api
+    # deploy:
+    #   replicas: 5
+  # nginx:
+  #   image: nginx:latest
+  #   ports:
+  #   - target: 80
+  #     published: 80
+  #     protocol: tcp
+    volumes:
+    - type: bind
+      source: ./nginx/nginx.conf
+      target: /etc/nginx/nginx.conf
+      
+
+ 
+
